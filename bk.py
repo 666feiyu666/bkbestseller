@@ -51,9 +51,9 @@ def scrape_amazon_top10(year):
 
     return books
 
-# 批量爬取 2000–2024 年图书
+# 批量爬取 1995–2024 年图书
 all_books = []
-for y in range(2000, 2025):
+for y in range(1995, 2025):
     try:
         books = scrape_amazon_top10(y)
         print(f"✅ {y} 年完成，共 {len(books)} 本")
