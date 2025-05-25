@@ -1,9 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
-
 
 def scrape_amazon_top10_with_links(year):
     url = f"https://www.amazon.com/gp/bestsellers/{year}/books"
@@ -27,13 +27,11 @@ def scrape_amazon_top10_with_links(year):
         book_url = "https://www.amazon.com" + link_tag['href'] if link_tag else "N/A"
 
         books.append({
-            "year": year,
             "title": title,
             "url": book_url
         })
 
     return books
-
 
 def scrape_book_description(url):
     options = Options()
@@ -54,23 +52,23 @@ def scrape_book_description(url):
         return desc_tag.get_text(strip=True)
     return "N/A"
 
-# 批量爬取 1995–2024 年前十图书及其描述
-all_books = []
-for year in range(1995, 2025):
-    try:
-        books = scrape_amazon_top10_with_links(year)
-        for book in books:
-            if book["url"] != "N/A":
-                try:
-                    book["description"] = scrape_book_description(book["url"])
-                except Exception as e:
-                    book["description"] = "N/A"
-        all_books.extend(books)
-        print(f"✅ {year} 年完成，共 {len(books)} 本")
-    except Exception as e:
-        print(f"❌ {year} 年失败：{e}")
+def crawl_top10_descriptions(year=2024, output_csv=True):
+    books = scrape_amazon_top10_with_links(year)
+    for book in books:
+        if book["url"] != "N/A":
+            try:
+                desc = scrape_book_description(book["url"])
+                book["description"] = desc
+                print(f"✅ {book['title'][:30]} - 描述抓取成功")
+            except Exception as e:
+                book["description"] = "N/A"
+                print(f"❌ {book['title'][:30]} - 描述抓取失败: {e}")
 
-# 保存结果
-df = pd.DataFrame(all_books)
-df.to_csv("amazon_books_1995_2024_top10_desc_only.csv", index=False)
-print("✅ 全部完成，已保存：amazon_books_1995_2024_top10_desc_only.csv")
+    if output_csv:
+        pd.DataFrame(books).to_csv(f"amazon_books_{year}_top10_desc_only.csv", index=False)
+        print(f"✅ 已保存：amazon_books_{year}_top10_desc_only.csv")
+
+    return books
+
+if __name__ == "__main__":
+    crawl_top10_descriptions(2024)
