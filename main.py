@@ -1,8 +1,8 @@
 import datavisualization as dv
 
 def main():
-    csv_path = "amazon_books_1995_2024_top10.csv"
-    # csv_path = "amazon_books_1995_2024_top100.csv"
+    csv_path = "data/amazon_books_1995_2024_top10.csv"
+    # csv_path = "data/amazon_books_1995_2024_top100.csv"
     dv.avg_price_by_year(csv_path)
     dv.plot_avg_rating_trend(csv_path)
     dv.plot_repeated_authors(csv_path)
