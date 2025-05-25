@@ -104,5 +104,5 @@ for y in range(1995, 2025):
 
 # 保存结果
 df = pd.DataFrame(all_books)
-df.to_csv("amazon_books_1995_2024_top100.csv", index=False)
+df.to_csv("data/amazon_books_1995_2024_top100.csv", index=False)
 print("✅ 全部完成，已保存：amazon_books_1995_2024_top100.csv")
