@@ -16,7 +16,7 @@ raw_stopwords = stopwords.words('english') + [
     "book", "books", "read", "reading", "author", "publisher", "edition",
     "york", "times", "press", "bestselling", "bestseller", "bestsellers",
     "amazon", "amazoncom", "selling", "seller", "sellers", "top", "ten", "best",
-    "also",
+    "also", "one", "new", "first", "world","years", "year",
 ]
 custom_stopwords = set(clean_stopwords(raw_stopwords))
 
