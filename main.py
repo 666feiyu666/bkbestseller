@@ -1,4 +1,4 @@
-import datavisualization as dv
+import general_datavisualization as dv
 
 def main():
     csv_path = "data/amazon_books_1995_2024_top10.csv"
